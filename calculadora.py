@@ -1,58 +1,92 @@
-import PyQt5.QtWidgets as qtw
+####################### IMPORTANDO AS BIBLIOTECAS #######################
+from tkinter import *
+from tkinter import ttk
 
-class MainWindow(qtw.QWidget):
-    def __init__(self):
-        super().__init__()
-        self.setWindowTitle('Calculadora')
-        self.setLayout(qtw.QVBoxLayout())
-        self.keypad()
+####################### DEFININDO CORES #######################
+cor1 = "#3b3b3b"
+cor2 = "#feffff"
+cor3 = "#38576b"
+cor4 = "#ECEFF1"
+cor5 = "#FFAB40"
 
-        self.show
-    def keypad(self):
-        container = qtw.QWidget()
-        container.setLayout(qtw.QGridLayout())
+####################### CRIANDO A JANELA #######################
+janela = Tk()
+janela.title('Calculadora')
+janela.geometry('235x308')
+janela.config(bg=cor1)
 
-        self.result_field = qtw.QLineEdit()
-        btn_result = qtw.QPushButton('Enter')
-        btn_clear = qtw.QPushButton('Clear')
-        btn_9 = qtw.QPushButton('9')
-        btn_8 = qtw.QPushButton('8')
-        btn_7 = qtw.QPushButton('7')
-        btn_6 = qtw.QPushButton('6')
-        btn_5 = qtw.QPushButton('5')
-        btn_4 = qtw.QPushButton('4')
-        btn_3 = qtw.QPushButton('3')
-        btn_2 = qtw.QPushButton('2')
-        btn_1 = qtw.QPushButton('1')
-        btn_0 = qtw.QPushButton('0')
-        btn_plus = qtw.QPushButton('+')
-        btn_mins = qtw.QPushButton('-')
-        btn_mult = qtw.QPushButton('*')
-        btn_divd = qtw.QPushButton('/')
+frame_tela = Frame(janela, width=235, height=50, bg=cor3)
+frame_tela.grid(row=0, column=0)
 
-        container.layout().addWidget(self.result_field,0,0,1,4)
-        container.layout().addWidget(btn_result,1,0,1,2)
-        container.layout().addWidget(btn_clear,1,2,1,2)
-        container.layout().addWidget(btn_9,2,0)
-        container.layout().addWidget(btn_8,2,1)
-        container.layout().addWidget(btn_7,2,2)
-        container.layout().addWidget(btn_plus,2,3)
-        container.layout().addWidget(btn_6,3,0)
-        container.layout().addWidget(btn_5,3,1)
-        container.layout().addWidget(btn_4,3,2)
-        container.layout().addWidget(btn_mins,3,3)
-        container.layout().addWidget(btn_3,4,0)
-        container.layout().addWidget(btn_2,4,1)
-        container.layout().addWidget(btn_1,4,2)
-        container.layout().addWidget(btn_mult,4,3)
-        container.layout().addWidget(btn_0,5,0,1,3)
-        container.layout().addWidget(btn_divd,5,3)
-        self.layout().addWidget(container)
+frame_corpo = Frame(janela, width=235, height=268)
+frame_corpo.grid(row=1, column=0)
+
+####################### CRIANDO AS FUNÇÕES #######################
+todos_valores = ''
+valor_texto = StringVar()
+
+def entrar_valores(event):
+    global todos_valores
+    todos_valores = todos_valores + str(event)
+    valor_texto.set(todos_valores)
 
 
-app = qtw.QApplication([])
-mw = MainWindow()
-app;setStyle(qtw.)
-app.exec_()
+def calcular():
+    global todos_valores
+    resultado = eval(todos_valores)
+    valor_texto.set(str(resultado))
 
-print('Rodou')
+
+def limpar_tela():
+    global todos_valores
+    todos_valores = ''
+    valor_texto.set('')
+
+app_label = Label(frame_tela, textvariable=valor_texto, width=16, height=2, padx=7, relief=FLAT, anchor='e', justify=RIGHT, font=('Ivy 18'), bg=cor3, fg=cor2)
+app_label.place(x=0, y=0)
+
+
+####################### CRIANDO OS BOTÕES #######################
+bt_clear = Button(frame_corpo, command=limpar_tela, text='C', width=11, height=2, bg=cor4, font=('Ivy 13 bold'), relief=RAISED, overrelief=RIDGE)
+bt_clear.place(x=0, y=0)
+bt_resto = Button(frame_corpo, command=lambda: entrar_valores("%"), text='%', width=5, height=2, bg=cor4, font=('Ivy 13 bold'), relief=RAISED, overrelief=RIDGE)
+bt_resto.place(x=118, y=0)
+bt_div = Button(frame_corpo, command=lambda: entrar_valores("/"), text="/", width=5, height=2, bg=cor5, fg=cor2,font=('Ivy 13 bold'), relief=RAISED, overrelief=RIDGE)
+bt_div.place(x=177, y=0)
+
+bt_7 = Button(frame_corpo, command=lambda: entrar_valores("7"), text='7', width=5, height=2, bg=cor4, font=('Ivy 13 bold'), relief=RAISED, overrelief=RIDGE)
+bt_7.place(x=0, y=52)
+bt_8 = Button(frame_corpo, command=lambda: entrar_valores("8"), text="8", width=5, height=2, bg=cor4, font=('Ivy 13 bold'), relief=RAISED, overrelief=RIDGE)
+bt_8.place(x=59, y=52)
+bt_9 = Button(frame_corpo, command=lambda: entrar_valores("9"), text='9', width=5, height=2, bg=cor4, font=('Ivy 13 bold'), relief=RAISED, overrelief=RIDGE)
+bt_9.place(x=118, y=52)
+bt_mult = Button(frame_corpo, command=lambda: entrar_valores("*"), text="*", width=5, height=2, bg=cor5, fg=cor2,font=('Ivy 13 bold'), relief=RAISED, overrelief=RIDGE)
+bt_mult.place(x=177, y=52)
+
+bt_4 = Button(frame_corpo, command=lambda: entrar_valores("4"), text='4', width=5, height=2, bg=cor4, font=('Ivy 13 bold'), relief=RAISED, overrelief=RIDGE)
+bt_4.place(x=0, y=104)
+bt_5 = Button(frame_corpo, command=lambda: entrar_valores("5"), text="5", width=5, height=2, bg=cor4, font=('Ivy 13 bold'), relief=RAISED, overrelief=RIDGE)
+bt_5.place(x=59, y=104)
+bt_6 = Button(frame_corpo, command=lambda: entrar_valores("6"), text='6', width=5, height=2, bg=cor4, font=('Ivy 13 bold'), relief=RAISED, overrelief=RIDGE)
+bt_6.place(x=118, y=104)
+bt_sub = Button(frame_corpo, command=lambda: entrar_valores("-"), text="-", width=5, height=2, bg=cor5, fg=cor2,font=('Ivy 13 bold'), relief=RAISED, overrelief=RIDGE)
+bt_sub.place(x=177, y=104)
+
+bt_1 = Button(frame_corpo, command=lambda: entrar_valores("1"), text='1', width=5, height=2, bg=cor4, font=('Ivy 13 bold'), relief=RAISED, overrelief=RIDGE)
+bt_1.place(x=0, y=156)
+bt_2 = Button(frame_corpo, command=lambda: entrar_valores("2"), text="2", width=5, height=2, bg=cor4, font=('Ivy 13 bold'), relief=RAISED, overrelief=RIDGE)
+bt_2.place(x=59, y=156)
+bt_3 = Button(frame_corpo, command=lambda: entrar_valores("3"), text='3', width=5, height=2, bg=cor4, font=('Ivy 13 bold'), relief=RAISED, overrelief=RIDGE)
+bt_3.place(x=118, y=156)
+bt_adi = Button(frame_corpo, command=lambda: entrar_valores("+"), text="+", width=5, height=2, bg=cor5, fg=cor2,font=('Ivy 13 bold'), relief=RAISED, overrelief=RIDGE)
+bt_adi.place(x=177, y=156)
+
+bt_0 = Button(frame_corpo, command=lambda: entrar_valores("0"), text='0', width=11, height=2, bg=cor4, font=('Ivy 13 bold'), relief=RAISED, overrelief=RIDGE)
+bt_0.place(x=0, y=208)
+bt_ponto = Button(frame_corpo, command=lambda: entrar_valores("."), text=".", width=5, height=2, bg=cor4, font=('Ivy 13 bold'), relief=RAISED, overrelief=RIDGE)
+bt_ponto.place(x=118, y=208)
+bt_igual = Button(frame_corpo, command=calcular, text='=', width=5, height=2, bg=cor5, fg=cor2,font=('Ivy 13 bold'), relief=RAISED, overrelief=RIDGE)
+bt_igual.place(x=177, y=208)
+
+
+janela.mainloop()
